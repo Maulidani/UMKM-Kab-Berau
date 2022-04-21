@@ -29,7 +29,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var myMap: GoogleMap
     private var isReady = false
-    private var polyline: Polyline? = null
 
     private val locationRequestCode = 1001
 
@@ -40,9 +39,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var cameraZoom: Boolean = false
 
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navigationView: NavigationView
-
     var latUmkm: String = ""
     var longUmkm: String = ""
 
@@ -64,8 +60,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 mMap.addMarker(MarkerOptions().position(lokasiUmkm).title("Lokasi UMKM Pilihan"))
             }
-
-
         }
     }
 
@@ -78,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.app.umkmkabberau.R.layout.activity_maps)
-        supportActionBar?.title = "Lokasi Umkm"
+        supportActionBar?.hide()
 
         latUmkm = intent.getStringExtra("lat_umkm").toString()
         longUmkm = intent.getStringExtra("long_umkm").toString()

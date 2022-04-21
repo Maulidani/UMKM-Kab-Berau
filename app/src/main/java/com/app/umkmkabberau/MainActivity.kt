@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 // splash screen
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
-
     private lateinit var mMap: GoogleMap
     private lateinit var myMap: GoogleMap
     private var isReady = false
