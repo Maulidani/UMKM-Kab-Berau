@@ -50,7 +50,7 @@ class UmkmAdapterArray(
 //            9 lat umkm
 //            10 long umkm
 
-            tvNamaProduk.text = result[1]
+            tvNamaProduk.text = result[2]
             tvHargaProduk.text = result[3]
             tvRatingProduk.text = result[4]
             tvJarakProduk.text = result[5]

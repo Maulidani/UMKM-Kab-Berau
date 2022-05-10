@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.view.MenuItem
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.app.umkmkabberau.R
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -25,6 +28,7 @@ import com.google.android.material.navigation.NavigationView
 import java.io.UnsupportedEncodingException
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    private val pbLoading: ProgressBar by lazy { findViewById(R.id.pbLoading) }
 
     private lateinit var mMap: GoogleMap
     private lateinit var myMap: GoogleMap
@@ -59,6 +63,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     cameraZoom = true
                 }
                 mMap.addMarker(MarkerOptions().position(lokasiUmkm).title("Lokasi UMKM Pilihan"))
+                pbLoading.visibility = View.INVISIBLE
             }
         }
     }
@@ -73,6 +78,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(com.app.umkmkabberau.R.layout.activity_maps)
         supportActionBar?.hide()
+        pbLoading.visibility = View.VISIBLE
 
         latUmkm = intent.getStringExtra("lat_umkm").toString()
         longUmkm = intent.getStringExtra("long_umkm").toString()

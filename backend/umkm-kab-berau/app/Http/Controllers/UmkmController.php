@@ -20,12 +20,6 @@ class UmkmController extends Controller
         ])
             ->get();
 
-        $productDataNorm = Umkm::where([
-            ['jenis_umkm', '=', $jenisUmkm],
-            ['jenis_produk', '=', $jenisProduk]
-        ])
-            ->get(['harga','rating']);
-
         if ($product->isEmpty()) {
             return response()->json([
                 'message' => 'Failed',

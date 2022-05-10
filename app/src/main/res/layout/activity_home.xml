@@ -217,115 +217,137 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginVertical="100dp"
+            android:layout_marginVertical="32dp"
             app:cardCornerRadius="24dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/grey"
-                android:paddingHorizontal="24dp">
+                android:background="@color/grey">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTitleBobot"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center"
-                    android:text="Haircut"
-                    android:textColor="@color/purple_700"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvInfoBobot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:drawableRight="@drawable/ic_info"
-                    android:gravity="center"
-                    android:text="Tentukan Bobot       "
-                    android:textColor="@color/black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvTitleBobot" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/jenisTextField"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/white"
-                    android:hint="Jenis jasa/produk"
-                    app:layout_constraintTop_toBottomOf="@id/tvInfoBobot">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/inputJenis"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="24dp">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTitleBobot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:gravity="center"
+                            android:text="Haircut"
+                            android:textColor="@color/purple_700"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/hargaTextField"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:background="@color/white"
-                    android:hint="Harga"
-                    app:layout_constraintTop_toBottomOf="@id/jenisTextField">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvInfoBobot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:gravity="center"
+                            android:text="Tentukan Bobot"
+                            android:textColor="@color/black"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvTitleBobot" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/inputHarga"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/jenisTextField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@color/white"
+                            android:hint="Jenis jasa/produk"
+                            app:layout_constraintTop_toBottomOf="@id/tvInfoBobot">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                            <AutoCompleteTextView
+                                android:id="@+id/inputJenis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/ratingTextField"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:background="@color/white"
-                    android:hint="Rating"
-                    app:layout_constraintTop_toBottomOf="@id/hargaTextField">
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    <AutoCompleteTextView
-                        android:id="@+id/inputRating"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/hargaTextField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/white"
+                            android:hint="Harga"
+                            app:layout_constraintTop_toBottomOf="@id/jenisTextField">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                            <AutoCompleteTextView
+                                android:id="@+id/inputHarga"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/jarakTextField"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:background="@color/white"
-                    android:hint="Jarak"
-                    app:layout_constraintTop_toBottomOf="@id/ratingTextField">
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    <AutoCompleteTextView
-                        android:id="@+id/inputJarak"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ratingTextField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/white"
+                            android:hint="Rating"
+                            app:layout_constraintTop_toBottomOf="@id/hargaTextField">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                            <AutoCompleteTextView
+                                android:id="@+id/inputRating"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/jarakTextField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/white"
+                            android:hint="Jarak"
+                            app:layout_constraintTop_toBottomOf="@id/ratingTextField">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/inputJarak"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="none" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="80dp"
+                            android:src="@drawable/info"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/jarakTextField" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </ScrollView>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
                     android:layout_marginBottom="12dp"
                     android:backgroundTint="@color/white"
                     android:text="Submit"

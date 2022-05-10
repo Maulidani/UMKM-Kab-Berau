@@ -4,6 +4,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -28,6 +30,7 @@ class ResultUmkmActivity : AppCompatActivity() {
     private lateinit var rvUmkm: RecyclerView
     private val tvJenisUmkm: TextView by lazy { findViewById(R.id.tvTitleJenis) }
     private val tvBackAndTitle: TextView by lazy { findViewById(R.id.tvHeadTitle) }
+    private val pbLoading: ProgressBar by lazy { findViewById(R.id.pbLoading) }
 
     var latIntent: Double = 0.0
     var longIntent: Double = 0.0
@@ -55,6 +58,8 @@ class ResultUmkmActivity : AppCompatActivity() {
     }
 
     private fun getUmkm(jenisUmkm: String, jenisProduk: String, kriteriaBobot: IntArray) {
+        pbLoading.visibility = View.VISIBLE
+
         ApiClient.instances.umkm(jenisUmkm, jenisProduk)
             .enqueue(object : Callback<Model.ResponseUmkmModel> {
 
@@ -77,11 +82,16 @@ class ResultUmkmActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "$message / gagal", Toast.LENGTH_SHORT)
                             .show()
                     }
+
+                    pbLoading.visibility = View.INVISIBLE
+
                 }
 
                 override fun onFailure(call: Call<Model.ResponseUmkmModel>, t: Throwable) {
                     Toast.makeText(applicationContext, t.message.toString(), Toast.LENGTH_SHORT)
                         .show()
+
+                    pbLoading.visibility = View.INVISIBLE
                 }
 
             })
@@ -122,7 +132,8 @@ class ResultUmkmActivity : AppCompatActivity() {
 
                 val jarak = getJarak(i.latitude, i.longitude)
 
-                dataNormalisasi!![index] = doubleArrayOf(i.harga, i.rating, jarak.toDouble())
+                dataNormalisasi!![index] =
+                    doubleArrayOf(i.harga, i.rating, jarak)
 
                 Log.e("setTopsis: diolah", dataNormalisasi[index].contentToString())
             }
@@ -324,14 +335,18 @@ class ResultUmkmActivity : AppCompatActivity() {
         for (i in dp.indices) {
 
             value[i] = dm[i] / (dm[i] + dp[i])
+
+            val jarak: Double =
+                getJarak(data!![i]!!.get(4).toDouble(), data[i]?.get(5)!!.toDouble()) // jarak
+
             nilaiPrefrensi.add(
                 arrayOf(
                     value[i].toString(), //nilai topsis
-                    data!![i]?.get(0).toString(), //nama produk
+                    data[i]?.get(0).toString(), //nama produk
                     data[i]?.get(1).toString(), //nama umkm / toko
                     data[i]?.get(2).toString(), //harga
                     data[i]?.get(3).toString(), //rating
-                    getJarak(data[i]?.get(4)!!.toDouble(), data[i]?.get(5)!!.toDouble()), // jarak
+                    jarak.toString(), // jarak
                     data[i]?.get(6).toString(), //deskripsi
                     data[i]?.get(7).toString(), //img
                     data[i]?.get(8).toString(), //telepon
@@ -374,7 +389,7 @@ class ResultUmkmActivity : AppCompatActivity() {
     }
 
 
-    private fun getJarak(latUmkm: Double, longUmkm: Double): String {
+    private fun getJarak(latUmkm: Double, longUmkm: Double): Double {
 
         val myLocation =
             LatLng(
@@ -390,7 +405,7 @@ class ResultUmkmActivity : AppCompatActivity() {
 
         val distance: Double = SphericalUtil.computeDistanceBetween(myLocation, umkmLocation)
 
-        return String.format("%.2f", distance / 1000)
+        return String.format("%.0f", distance / 1000).toDouble()
 
     }
 
