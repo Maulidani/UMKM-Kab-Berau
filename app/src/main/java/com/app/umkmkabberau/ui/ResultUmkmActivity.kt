@@ -57,6 +57,7 @@ class ResultUmkmActivity : AppCompatActivity() {
         getUmkm(jenisUmkm, jenisProduk, kriteriaBobot)
     }
 
+    // ambil data dari database
     private fun getUmkm(jenisUmkm: String, jenisProduk: String, kriteriaBobot: IntArray) {
         pbLoading.visibility = View.VISIBLE
 
@@ -97,6 +98,7 @@ class ResultUmkmActivity : AppCompatActivity() {
             })
     }
 
+    // mengambil data untuk perhitungan topsis
     private fun setTopsis(
         kriteriaBobot: IntArray,
         data: List<Model.DataUmkmModel>?,
@@ -157,36 +159,9 @@ class ResultUmkmActivity : AppCompatActivity() {
 
         prefrensi(dp, dm, dataDetail)
 
-//  val topsis = RumusTopsis()
-//        topsis.JFrameTopsis1(dataNormalisasi)
-//        data_norm_bobot = topsis.normalisasi(dataNormalisasi, bobot)
-//
-//        //max min
-//        min = topsis.min(data_norm_bobot, jenisBobot)
-//        max = topsis.max(data_norm_bobot, jenisBobot)
-//        dm = topsis.alternatifDm(data_norm_bobot, min)
-//        dp = topsis.alternatifDp(data_norm_bobot, max)
-//
-//        topsis.prefrensi(dp, dm, dataDetail)
-
     }
 
-    ///
-
-    fun showRecyclerView(list: ArrayList<Array<String>>) {
-
-
-        val adapter = list?.let { UmkmAdapterArray(it) }
-        rvUmkm.layoutManager = LinearLayoutManager(applicationContext)
-        rvUmkm.adapter = adapter
-
-        list.forEach {
-            Log.e("setTopsis: recyclerview", it.contentToString())
-        }
-
-    }
-
-    ////////////////////////////////////////////////
+    // perhitungan topsis
     var nilaiPrefrensi = ArrayList<Array<String>>()
 
     private fun JFrameTopsis1(data_nor: Array<DoubleArray?>?) {
@@ -244,7 +219,7 @@ class ResultUmkmActivity : AppCompatActivity() {
         return value!!
     }
 
-    fun max(data_norm_bobot: Array<DoubleArray>, data_bobot: IntArray): DoubleArray {
+    private fun max(data_norm_bobot: Array<DoubleArray>, data_bobot: IntArray): DoubleArray {
         val max = DoubleArray(data_bobot.size)
         for (i in data_norm_bobot.indices) {
             max[i] = 0.0
@@ -263,7 +238,7 @@ class ResultUmkmActivity : AppCompatActivity() {
         return max
     }
 
-    fun min(data_norm_bobot: Array<DoubleArray>, data_bobot: IntArray): DoubleArray {
+    private fun min(data_norm_bobot: Array<DoubleArray>, data_bobot: IntArray): DoubleArray {
         val min = DoubleArray(data_bobot.size)
         for (i in data_norm_bobot.indices) {
             min[i] = 0.0
@@ -282,7 +257,7 @@ class ResultUmkmActivity : AppCompatActivity() {
         return min
     }
 
-    fun alternatifDp(data_norm_bobot: Array<DoubleArray>, max1: DoubleArray): DoubleArray {
+    private fun alternatifDp(data_norm_bobot: Array<DoubleArray>, max1: DoubleArray): DoubleArray {
         val data_normal = Array(data_norm_bobot[0].size) {
             DoubleArray(
                 data_norm_bobot.size
@@ -306,7 +281,7 @@ class ResultUmkmActivity : AppCompatActivity() {
         return value
     }
 
-    fun alternatifDm(data_norm_bobot: Array<DoubleArray>, min1: DoubleArray): DoubleArray {
+    private fun alternatifDm(data_norm_bobot: Array<DoubleArray>, min1: DoubleArray): DoubleArray {
         val data_normal = Array(data_norm_bobot[0].size) {
             DoubleArray(
                 data_norm_bobot.size
@@ -330,14 +305,15 @@ class ResultUmkmActivity : AppCompatActivity() {
         return value
     }
 
-    fun prefrensi(dp: DoubleArray, dm: DoubleArray, data: Array<Array<String>?>?) {
+    private fun prefrensi(dp: DoubleArray, dm: DoubleArray, data: Array<Array<String>?>?) {
         val value = DoubleArray(dp.size)
         for (i in dp.indices) {
 
             value[i] = dm[i] / (dm[i] + dp[i])
 
+//            val jarak: Double = getJarak(data!![i]!!.get(4).toDouble(), data[i]?.get(5)!!.toDouble()) // jarak
             val jarak: Double =
-                getJarak(data!![i]!!.get(4).toDouble(), data[i]?.get(5)!!.toDouble()) // jarak
+                haversine(data!![i]!!.get(4).toDouble(), data[i]?.get(5)!!.toDouble()) // jarak
 
             nilaiPrefrensi.add(
                 arrayOf(
@@ -366,29 +342,7 @@ class ResultUmkmActivity : AppCompatActivity() {
         sortMintoMax(tes1)
     }
 
-    fun sortMintoMax(value: Array<Array<String>?>) {
-
-//        double[] arrDesc = Arrays.stream(n).boxed()
-//                .sorted(Collections.reverseOrder())
-//                .mapToDouble(Double::doubleValue)
-//                .toArray();
-//        System.out.println(Arrays.toString(arrDesc));
-
-        val list = ArrayList<Array<String>>()
-
-        Stream.of<Array<String>>(*value)
-            .sorted { small: Array<String>, big: Array<String> ->
-                big[0].compareTo(small[0])
-            }
-            .forEach { dataSort: Array<String> ->
-                list.add(dataSort)
-                Log.e("setTopsis: hasil sort", dataSort.contentToString())
-            }
-
-        showRecyclerView(list)
-    }
-
-
+    // fungsi dari google maps
     private fun getJarak(latUmkm: Double, longUmkm: Double): Double {
 
         val myLocation =
@@ -409,5 +363,59 @@ class ResultUmkmActivity : AppCompatActivity() {
 
     }
 
+    // fungsi menggunakan haversine
+    private fun haversine(
+        latUmkm: Double, longUmkm: Double
+    ): Double {
+        // distance between latitudes and longitudes
+        var lat1 = latIntent
+        var lat2 = latUmkm
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(longUmkm - longIntent)
+
+        // convert to radians
+        lat1 = Math.toRadians(lat1)
+        lat2 = Math.toRadians(lat2)
+
+        // apply formulae
+        val a = Math.pow(Math.sin(dLat / 2), 2.0) +
+                Math.pow(Math.sin(dLon / 2), 2.0) *
+                Math.cos(lat1) *
+                Math.cos(lat2)
+        val rad = 6371.0
+        val c = 2 * Math.asin(Math.sqrt(a))
+
+        return rad * c
+    }
+
+    // sorting hasil topsis
+    private fun sortMintoMax(value: Array<Array<String>?>) {
+
+        val list = ArrayList<Array<String>>()
+
+        Stream.of<Array<String>>(*value)
+            .sorted { small: Array<String>, big: Array<String> ->
+                big[0].compareTo(small[0])
+            }
+            .forEach { dataSort: Array<String> ->
+                list.add(dataSort)
+                Log.e("setTopsis: hasil sort", dataSort.contentToString())
+            }
+
+        showRecyclerView(list)
+    }
+
+    // menampilkan data hasil topsis
+    private fun showRecyclerView(list: ArrayList<Array<String>>) {
+
+        val adapter = UmkmAdapterArray(list)
+        rvUmkm.layoutManager = LinearLayoutManager(applicationContext)
+        rvUmkm.adapter = adapter
+
+        list.forEach {
+            Log.e("setTopsis: recyclerview", it.contentToString())
+        }
+
+    }
 
 }

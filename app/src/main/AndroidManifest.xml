@@ -34,15 +34,6 @@
             android:name=".ui.MapsActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".ui.admin.AddEditUmkmActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.admin.HomeAdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.admin.LoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.DetailUmkmActivity"
             android:exported="false" />
         <activity

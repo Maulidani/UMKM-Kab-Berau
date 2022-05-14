@@ -3,7 +3,7 @@ package com.app.umkmkabberau.utils
 class Constant {
     companion object {
         //        const val BASE_URL = "https://testing-app-bosku.000webhostapp.com/Traditional-Food/public/"
-        const val BASE_URL = "http://192.168.208.5:8000"
+        const val BASE_URL = "http://192.168.189.5:8000"
 
         const val URL_IMAGE_UMKM = "$BASE_URL/image/"
 
